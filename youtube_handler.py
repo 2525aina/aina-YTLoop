@@ -268,7 +268,11 @@ def create_youtube_broadcast(youtube, settings):
         return None
 
     # 4. プレイリストに追加
+<<<<<<< HEAD
     playlist_title = now_jst.strftime(settings['youtube']['broadcast']['playlist_title_format'])
+=======
+    playlist_title = utc_now.strftime(settings['youtube']['broadcast']['playlist_title_format'])
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
     playlist_id = get_or_create_playlist(youtube, playlist_title, settings)
     if playlist_id:
         logger.info(f"4/4: 配信枠をプレイリスト '{playlist_title}' に追加中...")

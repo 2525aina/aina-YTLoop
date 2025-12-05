@@ -89,22 +89,38 @@ def main():
                 logger.info("新しいYouTubeライブ配信枠を作成中...")
                 stream_key = youtube_handler.create_youtube_broadcast(youtube, settings)
                 if not stream_key:
+<<<<<<< HEAD
                     logger.error(f"ライブ配信枠の作成に失敗しました。{settings.get('script', {}).get('error_retry_delay_seconds', 60)}秒後に次のループを試行します。")
                     time.sleep(settings.get('script', {}).get('error_retry_delay_seconds', 60))
+=======
+                    logger.error("ライブ配信枠の作成に失敗しました。60秒後に次のループを試行します。")
+                    time.sleep(60)
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
                     continue
                 logger.info(f"ライブ配信枠の作成に成功しました。ストリームキー: ...{stream_key[-4:]}")
 
                 # 4. OBSにストリームキーを設定
                 logger.info("OBSにストリームキーを設定中...")
                 if not obs_handler.set_stream_settings(stream_key):
+<<<<<<< HEAD
                     logger.error(f"OBSストリームキーの設定に失敗しました。{settings.get('script', {}).get('error_retry_delay_seconds', 60)}秒後に次のループを試行します。")
                     time.sleep(settings.get('script', {}).get('error_retry_delay_seconds', 60))
+=======
+                    logger.error("OBSストリームキーの設定に失敗しました。次のループを試行します。")
+                    time.sleep(60)
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
                     continue
 
                 # 5. OBSで配信を開始
                 logger.info("OBSに配信開始コマンドを送信中...")
                 obs_handler.start_stream()
+<<<<<<< HEAD
                 if obs_handler.wait_for_stream_to_start(timeout=settings.get('script', {}).get('obs_stream_start_timeout_seconds', 60)):
+=======
+
+                # 6. OBSが実際に配信を開始するまで待機
+                if obs_handler.wait_for_stream_to_start(timeout=settings['script']['obs_stream_start_timeout_seconds']):
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
                     logger.info("OBSが正常に配信を開始しました。")
                     
                     def format_duration(seconds):
@@ -113,12 +129,20 @@ def main():
                         s = int(seconds % 60)
                         return f"{h}時間{m}分{s}秒"
 
+<<<<<<< HEAD
                     duration_str = format_duration(settings.get('script', {}).get('stream_actual_duration_seconds', 28800))
+=======
+                    duration_str = format_duration(settings['script']['stream_actual_duration_seconds'])
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
                     logger.info(f"設定された配信時間 ({duration_str}) 配信を継続します。")
 
                     # 配信中の定期処理
                     stream_start_time = time.time()
+<<<<<<< HEAD
                     while (time.time() - stream_start_time) < settings.get('script', {}).get('stream_actual_duration_seconds', 28800):
+=======
+                    while (time.time() - stream_start_time) < settings['script']['stream_actual_duration_seconds']:
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
                         if settings['obs_execution'].get('enable_source_reload', False):
                             reload_interval = settings['obs_execution'].get('source_reload_interval_seconds', 300)
                             if (time.time() - last_source_reload_time) >= reload_interval:
@@ -133,17 +157,30 @@ def main():
                     obs_handler.stop_stream()
                     logger.info("OBS配信停止コマンドを正常に送信しました。")
                 else:
+<<<<<<< HEAD
                     logger.warning(f"OBSが指定時間内に配信を開始しませんでした。{settings['script']['error_retry_delay_seconds']}秒後に次のループを試行します。")
                     time.sleep(settings['script']['error_retry_delay_seconds'])
+=======
+                    logger.warning("OBSが指定時間内に配信を開始しませんでした。次のループを試行します。")
+                    time.sleep(60)
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
                     continue
 
             except Exception as e:
                 logger.error(f"ループ内処理で予期せぬエラーが発生しました: {e}", exc_info=True)
+<<<<<<< HEAD
                 logger.info(f"{settings.get('script', {}).get('error_retry_delay_seconds', 60)}秒後に次のループを試行します。")
                 time.sleep(settings.get('script', {}).get('error_retry_delay_seconds', 60))
             
             logger.info(f"ループ処理が完了しました。{settings.get('script', {}).get('loop_interval_seconds', 10)}秒後に次の処理へ進みます。")
             time.sleep(settings.get('script', {}).get('loop_interval_seconds', 10))
+=======
+                logger.info("60秒後に次のループを試行します。")
+                time.sleep(60)
+            
+            logger.info("ループ処理が完了しました。10秒後に次の処理へ進みます。")
+            time.sleep(10)
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
             loop_iteration += 1
 
     except KeyboardInterrupt:

@@ -62,8 +62,11 @@ youtube:
 script:
   stream_actual_duration_seconds: 28800 # 各ループでの実際の配信時間 (秒)
   obs_stream_start_timeout_seconds: 60 # OBSが配信を開始するまでの最大待機時間 (秒)
+<<<<<<< HEAD
   error_retry_delay_seconds: 60 # ループ内でエラーが発生した際の待機時間 (秒)
   loop_interval_seconds: 10 # 各ループ処理間の待機時間 (秒)
+=======
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
 
 # ループ設定
 loop:
@@ -100,6 +103,7 @@ logging:
   # ファイルにログを出力するかどうか (true/false)
   log_to_file: true
   # ログファイル名のタイムスタンプ形式 (例: app_20990101_123456.log)
+<<<<<<< HEAD
   # rotation.enabled が true の場合、この設定は無視され、'app.log' というベース名が使われます。
   log_file_name_timestamp_format: "%Y%m%d_%H%M%S"
 
@@ -113,3 +117,6 @@ logging:
     when: "D"
     # ローテーションの間隔 (when と組み合わせて使用)
     interval: 1
+=======
+  log_file_name_timestamp_format: "%Y%m%d_%H%M%S"
+>>>>>>> 8b42004b82b55ea848cdf7c6a0cae2ddf5a5e3fb
